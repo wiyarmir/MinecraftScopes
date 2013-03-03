@@ -3,11 +3,14 @@ package wiyarmir.scopes.block;
 import java.util.logging.Level;
 
 import cpw.mods.fml.common.FMLLog;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import wiyarmir.scopes.Scopes;
 import wiyarmir.scopes.Utils;
@@ -15,9 +18,7 @@ import wiyarmir.scopes.gui.GuiHandler;
 import wiyarmir.scopes.tileentity.TileEntityScope;
 
 public class BasicScope extends GenericScope {
-	private static int textureID = 3;
-
-	private int resolution = 10;
+	private static int textureID = 4;
 
 	private void setup() {
 		setBlockName("basicScope");
@@ -35,15 +36,6 @@ public class BasicScope extends GenericScope {
 	}
 
 	@Override
-	public void onBlockPlacedBy(World par1World, int x, int y, int z,
-			EntityLiving placer) {
-		super.onBlockPlacedBy(par1World, x, y, z, placer);
-
-		int orient = Utils.yaw2dir(placer.rotationYaw);
-		par1World.setBlockMetadataWithNotify(x, y, z, orient);
-	}
-
-	@Override
 	public void onBlockAdded(World w, int x, int y, int z) {
 		super.onBlockAdded(w, x, y, z);
 		w.setBlockTileEntity(x, y, z,
@@ -55,17 +47,15 @@ public class BasicScope extends GenericScope {
 		return true;
 	}
 
-	/*
-	 * @Override public int getBlockTextureFromSide(int side) { if (side ==
-	 * Utils.dirXPos) { return textureID; } else { return textureID + 1;
-	 * } }
-	 */
+	@Override
+	@SideOnly(Side.CLIENT)
+	public int getBlockTexture(IBlockAccess BA, int x, int y, int z, int side) {
 
-	public int getBlockTextureFromSideAndMetadata(int side, int metadata) {
+		int metadata = BA.getBlockMetadata(x, y, z);
 		if (side == metadata) {
-			return textureID;
+			return textureID - 1;
 		} else {
-			return textureID + 1;
+			return textureID;
 		}
 	}
 

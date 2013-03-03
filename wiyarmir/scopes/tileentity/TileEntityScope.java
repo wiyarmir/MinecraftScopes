@@ -46,7 +46,6 @@ public class TileEntityScope extends TileEntity {
 								this.yCoord, this.zCoord + 1)
 						+ getCurrentStrength(this.worldObj, this.xCoord,
 								this.yCoord, this.zCoord - 1);
-				Scopes.logger.info("strength: " + strength);
 				data.add(strength > 15 ? 15 : strength);
 			} else {
 				data.add(0);
