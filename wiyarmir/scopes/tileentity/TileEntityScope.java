@@ -23,6 +23,8 @@ public class TileEntityScope extends TileEntity {
 	private static final float[] ranges = { 1.0f, 2.5f, 5.0f, 10.0f };
 	int indexOfRanges = 2;
 
+	private boolean tilt = false;
+
 	public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer) {
 		return this.worldObj.getBlockTileEntity(this.xCoord, this.yCoord,
 				this.zCoord) != this ? false : par1EntityPlayer.getDistanceSq(
@@ -38,6 +40,10 @@ public class TileEntityScope extends TileEntity {
 			boolean power = this.worldObj.isBlockGettingPowered(this.xCoord,
 					this.yCoord, this.zCoord);
 			if (power) {
+				
+				// Makes red dot tilt only if powered
+				tilt = !tilt;
+				
 				int strength = getCurrentStrength(this.worldObj,
 						this.xCoord - 1, this.yCoord, this.zCoord)
 						+ getCurrentStrength(this.worldObj, this.xCoord + 1,
@@ -46,9 +52,12 @@ public class TileEntityScope extends TileEntity {
 								this.yCoord, this.zCoord + 1)
 						+ getCurrentStrength(this.worldObj, this.xCoord,
 								this.yCoord, this.zCoord - 1);
-				Scopes.logger.info("strength: " + strength);
+				// Scopes.logger.info("strength: " + strength);
 				data.add(strength > 15 ? 15 : strength);
 			} else {
+				//If not powered, keep light off
+				tilt = false;
+				
 				data.add(0);
 			}
 		}
@@ -115,5 +124,9 @@ public class TileEntityScope extends TileEntity {
 		for (int i = 0; i < data.size(); i++) {
 			data.add(0);
 		}
+	}
+
+	public boolean getTilt() {
+		return tilt;
 	}
 }
