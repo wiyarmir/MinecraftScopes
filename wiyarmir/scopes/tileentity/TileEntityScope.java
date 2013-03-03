@@ -7,6 +7,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
+import wiyarmir.scopes.Scopes;
 import wiyarmir.scopes.Utils;
 import wiyarmir.scopes.util.ScopeMemory;
 
@@ -36,9 +38,18 @@ public class TileEntityScope extends TileEntity {
 			boolean power = this.worldObj.isBlockGettingPowered(this.xCoord,
 					this.yCoord, this.zCoord);
 			if (power) {
-				data.add(15);
+				int strength = getCurrentStrength(this.worldObj,
+						this.xCoord - 1, this.yCoord, this.zCoord)
+						+ getCurrentStrength(this.worldObj, this.xCoord + 1,
+								this.yCoord, this.zCoord)
+						+ getCurrentStrength(this.worldObj, this.xCoord,
+								this.yCoord, this.zCoord + 1)
+						+ getCurrentStrength(this.worldObj, this.xCoord,
+								this.yCoord, this.zCoord - 1);
+				Scopes.logger.info("strength: " + strength);
+				data.add(strength > 15 ? 15 : strength);
 			} else {
-				data.add(1);
+				data.add(0);
 			}
 		}
 		ticcount++;
@@ -51,7 +62,7 @@ public class TileEntityScope extends TileEntity {
 	 */
 	private int getCurrentStrength(World par1World, int par2, int par3, int par4) {
 		if (par1World.getBlockId(par2, par3, par4) != Block.redstoneWire.blockID) {
-			return 15;
+			return 0;
 		} else {
 			int strength = par1World.getBlockMetadata(par2, par3, par4);
 			return strength;
