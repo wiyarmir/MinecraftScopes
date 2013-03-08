@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import net.minecraft.block.Block;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
+import wiyarmir.scopes.block.BasicGenerator;
 import wiyarmir.scopes.block.BasicScope;
 import wiyarmir.scopes.gui.GuiHandler;
 import wiyarmir.scopes.tileentity.TileEntityScope;
@@ -32,6 +33,7 @@ public class Scopes {
 	public static final String VERSION = "0.0.1";
 
 	public final static Block basicScope = new BasicScope(500);
+	public final static Block basicGenerator = new BasicGenerator(501);
 
 	// public final static Block genericOre = new GenericOre(501, 1,
 	// Material.iron);
@@ -63,10 +65,17 @@ public class Scopes {
 		LanguageRegistry.addName(basicScope, "Basic Scope");
 		MinecraftForge.setBlockHarvestLevel(basicScope, "pickaxe", 0);
 		GameRegistry.registerBlock(basicScope, "basicScope");
+
+		LanguageRegistry.addName(basicGenerator, "Basic Generator");
+		MinecraftForge.setBlockHarvestLevel(basicGenerator, "pickaxe", 0);
+		GameRegistry.registerBlock(basicGenerator, "basicGenerator");
+
 		// End Basic Blocks
 
+		// Tile entities
 		GameRegistry.registerTileEntity(TileEntityScope.class, "scopeEntity");
 
+		// GUIs
 		NetworkRegistry.instance().registerGuiHandler(this, new GuiHandler());
 
 		proxy.registerRenderers();
