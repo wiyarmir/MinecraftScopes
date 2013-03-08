@@ -296,13 +296,6 @@ public class GuiScope extends GuiScreen {
 		scope.getData().toArray(data);
 		// Scopes.logger.info("data: " + data);
 
-		// Plot tilt
-		boolean tilt = scope.getTilt();
-		if (tilt) {
-			this.drawTexturedModalRect(x + displayBeginX + 70, y
-					+ displayBeginY + 5, 0, 166, 10, 8);
-		}
-
 		// Plot data
 		for (int i = 0; i < data.length; i++) {
 			for (int j = data[i]; j > 0; j--) {
