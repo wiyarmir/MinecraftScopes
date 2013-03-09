@@ -1,10 +1,9 @@
 package wiyarmir.scopes.block;
 
 import net.minecraft.block.material.Material;
-import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.common.ForgeDirection;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import wiyarmir.scopes.tileentity.TileEntityGenerator;
 
 public class BasicGenerator extends GenericScope {
 
@@ -26,18 +25,16 @@ public class BasicGenerator extends GenericScope {
 		setup();
 	}
 
-	/*@Override
-	@SideOnly(Side.CLIENT)
-	public int getBlockTexture(IBlockAccess BA, int x, int y, int z, int side) {
-
-		int metadata = BA.getBlockMetadata(x, y, z);
-		metadata = (metadata < 2 ? 2 : metadata);
-		if (side == metadata) {
-			return textureID + 1;
-		} else {
-			return textureID;
-		}
-	}*/
+	/*
+	 * @Override
+	 * 
+	 * @SideOnly(Side.CLIENT) public int getBlockTexture(IBlockAccess BA, int x,
+	 * int y, int z, int side) {
+	 * 
+	 * int metadata = BA.getBlockMetadata(x, y, z); metadata = (metadata < 2 ? 2
+	 * : metadata); if (side == metadata) { return textureID + 1; } else {
+	 * return textureID; } }
+	 */
 
 	@Override
 	public int getBlockTextureFromSideAndMetadata(int side, int metadata) {
@@ -48,5 +45,14 @@ public class BasicGenerator extends GenericScope {
 			return textureFront;
 		}
 		return textureDefault;
+	}
+
+	@Override
+	public boolean hasTileEntity(int metadata) {
+		return true;
+	}
+	@Override
+	public TileEntity createTileEntity(World world, int metadata) {
+		return new TileEntityGenerator();
 	}
 }
