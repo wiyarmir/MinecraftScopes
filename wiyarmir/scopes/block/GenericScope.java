@@ -10,7 +10,7 @@ import wiyarmir.scopes.Utils;
 
 public class GenericScope extends Block {
 
-	protected static int textureID = 0;
+	protected static int textureDefault = 0;
 	protected static Material defaultMaterial = Material.circuits;
 
 	private void setup() {
@@ -20,7 +20,7 @@ public class GenericScope extends Block {
 	}
 
 	protected GenericScope(int id) {
-		super(id, textureID, defaultMaterial);
+		super(id, textureDefault, defaultMaterial);
 		setup();
 	}
 

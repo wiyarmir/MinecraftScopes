@@ -18,7 +18,8 @@ import wiyarmir.scopes.gui.GuiHandler;
 import wiyarmir.scopes.tileentity.TileEntityScope;
 
 public class BasicScope extends GenericScope {
-	private static int textureID = 4;
+	private static int textureDefault = 4;
+	private static int textureFront = 3;
 
 	private void setup() {
 		setBlockName("basicScope");
@@ -26,7 +27,7 @@ public class BasicScope extends GenericScope {
 	}
 
 	public BasicScope(int id) {
-		super(id, textureID);
+		super(id, textureFront);
 		setup();
 	}
 
@@ -48,15 +49,14 @@ public class BasicScope extends GenericScope {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public int getBlockTexture(IBlockAccess BA, int x, int y, int z, int side) {
-
-		int metadata = BA.getBlockMetadata(x, y, z);
-		if (side == metadata) {
-			return textureID - 1;
-		} else {
-			return textureID;
+	public int getBlockTextureFromSideAndMetadata(int side, int metadata) {
+		if (metadata == 0 && side == 3) {
+			return textureFront;
 		}
+		if (side == metadata) {
+			return textureFront;
+		}
+		return textureDefault;
 	}
 
 	@Override

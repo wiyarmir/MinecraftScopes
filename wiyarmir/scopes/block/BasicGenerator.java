@@ -1,13 +1,15 @@
 package wiyarmir.scopes.block;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.material.Material;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.common.ForgeDirection;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BasicGenerator extends GenericScope {
 
-	protected static int textureID = 4;
+	protected static int textureDefault = 4;
+	protected static int textureFront = 5;
 
 	private void setup() {
 		setBlockName("basicGenerator");
@@ -15,7 +17,7 @@ public class BasicGenerator extends GenericScope {
 	}
 
 	public BasicGenerator(int id) {
-		super(id, textureID);
+		super(id, textureDefault);
 		setup();
 	}
 
@@ -24,15 +26,27 @@ public class BasicGenerator extends GenericScope {
 		setup();
 	}
 
-	@Override
+	/*@Override
 	@SideOnly(Side.CLIENT)
 	public int getBlockTexture(IBlockAccess BA, int x, int y, int z, int side) {
 
 		int metadata = BA.getBlockMetadata(x, y, z);
+		metadata = (metadata < 2 ? 2 : metadata);
 		if (side == metadata) {
 			return textureID + 1;
 		} else {
 			return textureID;
 		}
+	}*/
+
+	@Override
+	public int getBlockTextureFromSideAndMetadata(int side, int metadata) {
+		if (metadata == 0 && side == 3) {
+			return textureFront;
+		}
+		if (side == metadata) {
+			return textureFront;
+		}
+		return textureDefault;
 	}
 }
