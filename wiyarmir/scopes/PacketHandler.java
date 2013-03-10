@@ -14,7 +14,7 @@ public class PacketHandler implements IPacketHandler {
 	public void onPacketData(INetworkManager manager,
 			Packet250CustomPayload packet, Player player) {
 		if (packet.channel.equals(Scopes.ID)) {
-			Scopes.logger.info("Packet! " + packet.toString());
+			//Scopes.logger.info("Packet! " + packet.toString());
 		}
 
 	}

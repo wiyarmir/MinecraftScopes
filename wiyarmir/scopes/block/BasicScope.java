@@ -8,6 +8,9 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
@@ -18,7 +21,7 @@ import wiyarmir.scopes.gui.GuiHandler;
 import wiyarmir.scopes.tileentity.TileEntityScope;
 
 public class BasicScope extends GenericScope {
-	private static int textureDefault = 4;
+	private static int textureDefault = 2;
 	private static int textureFront = 3;
 
 	private void setup() {
@@ -80,4 +83,5 @@ public class BasicScope extends GenericScope {
 		return true;
 
 	}
+
 }

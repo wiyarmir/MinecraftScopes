@@ -7,8 +7,8 @@ import wiyarmir.scopes.tileentity.TileEntityGenerator;
 
 public class BasicGenerator extends GenericScope {
 
-	protected static int textureDefault = 4;
-	protected static int textureFront = 5;
+	protected static int textureDefault = 2;
+	protected static int textureFront = 4;
 
 	private void setup() {
 		setBlockName("basicGenerator");

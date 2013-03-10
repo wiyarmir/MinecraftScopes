@@ -3,11 +3,15 @@ package wiyarmir.scopes;
 import java.util.logging.Logger;
 
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 import wiyarmir.scopes.block.BasicGenerator;
 import wiyarmir.scopes.block.BasicScope;
 import wiyarmir.scopes.gui.GuiHandler;
+import wiyarmir.scopes.tileentity.TileEntityGenerator;
 import wiyarmir.scopes.tileentity.TileEntityScope;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
@@ -30,13 +34,13 @@ public class Scopes {
 
 	public static final String ID = "Scopes";
 	public static final String NAME = "Scopes";
-	public static final String VERSION = "0.0.1";
+	public static final String VERSION = "0.0.2";
 
-	public final static Block basicScope = new BasicScope(500);
-	public final static Block basicGenerator = new BasicGenerator(501);
+	public static final int blockIDRangeStart = 1551;
 
-	// public final static Block genericOre = new GenericOre(501, 1,
-	// Material.iron);
+	public final static Block basicScope = new BasicScope(blockIDRangeStart + 0);
+	public final static Block basicGenerator = new BasicGenerator(
+			blockIDRangeStart + 1);
 
 	@Instance(ID)
 	public static Scopes instance;
@@ -59,9 +63,30 @@ public class Scopes {
 
 	@Init
 	public void load(FMLInitializationEvent event) {
-		// See Basic items tutorial for Generic Ingot
-		// LanguageRegistry.addName(genericIngot, "Generic Ingot");
+		blockRegistration();
 
+		tileEntityRegistration();
+
+		addRecipes();
+
+		// GUIs
+		NetworkRegistry.instance().registerGuiHandler(this, new GuiHandler());
+
+		proxy.registerRenderers();
+	}
+
+	private void addRecipes() {
+		ItemStack ironStack = new ItemStack(Item.ingotIron);
+		ItemStack diodeStack = new ItemStack(Item.redstoneRepeater);
+		ItemStack redstoneStack = new ItemStack(Item.redstone);
+//		GameRegistry.addRecipe(new ShapedOreRecipe(basicScope, true,
+//				new Object[] { "SSS", "STS", "SRS", Character.valueOf('S'),
+//						"ingotIron", Character.valueOf('T'), "ingotTin",
+//						Character.valueOf('R'), "ingotRedstone" }));
+		GameRegistry.addRecipe(new ItemStack(basicScope), "III", "ICI", "IRI", 'I', ironStack, 'C', diodeStack, 'R', redstoneStack);
+	}
+
+	private void blockRegistration() {
 		LanguageRegistry.addName(basicScope, "Basic Scope");
 		MinecraftForge.setBlockHarvestLevel(basicScope, "pickaxe", 0);
 		GameRegistry.registerBlock(basicScope, "basicScope");
@@ -70,15 +95,12 @@ public class Scopes {
 		MinecraftForge.setBlockHarvestLevel(basicGenerator, "pickaxe", 0);
 		GameRegistry.registerBlock(basicGenerator, "basicGenerator");
 
-		// End Basic Blocks
+	}
 
-		// Tile entities
+	private void tileEntityRegistration() {
 		GameRegistry.registerTileEntity(TileEntityScope.class, "scopeEntity");
-
-		// GUIs
-		NetworkRegistry.instance().registerGuiHandler(this, new GuiHandler());
-
-		proxy.registerRenderers();
+		GameRegistry.registerTileEntity(TileEntityGenerator.class,
+				"generatorEntity");
 	}
 
 	@PostInit

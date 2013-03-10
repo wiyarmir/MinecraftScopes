@@ -1,0 +1,19 @@
+[
+	{
+	  "modid": "Scopes",
+	  "name": "Minecraft Scopes",
+	  "description": "Adding oscilloscopes to Minecraft!",
+	  "version": "0.0.2",
+	  "credits": "Created by wiyarmir",
+	  "logoFile": "",
+	  "mcversion": "",
+	  "url": "http://wiyarmir.es/mc-scopes/",
+	  "updateUrl": "",
+	  "authors": [ "wiyarmir" ],
+	  "parent":"",
+	  "screenshots": [],
+	  "dependencies": [
+			 "mod_MinecraftForge"
+		]
+	}
+]
