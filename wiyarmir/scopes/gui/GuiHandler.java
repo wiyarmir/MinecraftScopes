@@ -17,8 +17,7 @@ public class GuiHandler implements IGuiHandler {
 			int x, int y, int z) {
 		TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
 		if (tileEntity instanceof TileEntityScope) {
-			// return new ContainerTiny(player.inventory, (TileEntityTiny)
-			// tileEntity);
+
 		}
 		return null;
 	}

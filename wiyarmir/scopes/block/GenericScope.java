@@ -10,7 +10,7 @@ import wiyarmir.scopes.Utils;
 
 public class GenericScope extends Block {
 
-	protected static int textureDefault = 0;
+	protected static int textureDefault = 0, textureFront = 0;
 	protected static Material defaultMaterial = Material.circuits;
 
 	private void setup() {
@@ -46,6 +46,26 @@ public class GenericScope extends Block {
 
 		int orient = Utils.yaw2dir(placer.rotationYaw);
 		par1World.setBlockMetadataWithNotify(x, y, z, orient);
+	}
+
+	@Override
+	public int getBlockTextureFromSideAndMetadata(int side, int metadata) {
+		if (metadata == 0 && side == 3) {
+			return textureFront;
+		}
+		if (side == metadata) {
+			return textureFront;
+		}
+		return textureDefault;
+	}
+
+	public void setTextureFront(int textureID) {
+		textureFront = textureID;
+	}
+
+
+	public void setTextureDefault(int textureID) {
+		textureDefault = textureID;
 	}
 
 }

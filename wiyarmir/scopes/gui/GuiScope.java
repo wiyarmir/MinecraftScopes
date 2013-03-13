@@ -72,6 +72,7 @@ public class GuiScope extends GuiScreen {
 				guiTop + 138, 20, 20, "-"));
 		controlList.add(new GuiButton(ID_BUTTON_PLUS, guiLeft + 217,
 				guiTop + 138, 20, 20, "+"));
+		
 	}
 
 	/**

@@ -7,10 +7,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.oredict.ShapedOreRecipe;
 import wiyarmir.scopes.block.BasicGenerator;
 import wiyarmir.scopes.block.BasicScope;
+import wiyarmir.scopes.block.PortableScopeBlock;
 import wiyarmir.scopes.gui.GuiHandler;
+import wiyarmir.scopes.item.PortableScopeItem;
 import wiyarmir.scopes.tileentity.TileEntityGenerator;
 import wiyarmir.scopes.tileentity.TileEntityScope;
 import cpw.mods.fml.common.FMLLog;
@@ -41,6 +42,10 @@ public class Scopes {
 	public final static Block basicScope = new BasicScope(blockIDRangeStart + 0);
 	public final static Block basicGenerator = new BasicGenerator(
 			blockIDRangeStart + 1);
+	public final static Block portableScopeBlock = new PortableScopeBlock(
+			blockIDRangeStart + 2);
+
+	public final static Item portableScopeItem = new PortableScopeItem(5000);
 
 	@Instance(ID)
 	public static Scopes instance;
@@ -65,6 +70,8 @@ public class Scopes {
 	public void load(FMLInitializationEvent event) {
 		blockRegistration();
 
+		itemRegistration();
+
 		tileEntityRegistration();
 
 		addRecipes();
@@ -79,11 +86,17 @@ public class Scopes {
 		ItemStack ironStack = new ItemStack(Item.ingotIron);
 		ItemStack diodeStack = new ItemStack(Item.redstoneRepeater);
 		ItemStack redstoneStack = new ItemStack(Item.redstone);
-//		GameRegistry.addRecipe(new ShapedOreRecipe(basicScope, true,
-//				new Object[] { "SSS", "STS", "SRS", Character.valueOf('S'),
-//						"ingotIron", Character.valueOf('T'), "ingotTin",
-//						Character.valueOf('R'), "ingotRedstone" }));
-		GameRegistry.addRecipe(new ItemStack(basicScope), "III", "ICI", "IRI", 'I', ironStack, 'C', diodeStack, 'R', redstoneStack);
+		ItemStack basicScopeStack = new ItemStack(basicScope);
+		ItemStack portableScopeItemStack = new ItemStack(portableScopeItem);
+		// GameRegistry.addRecipe(new ShapedOreRecipe(basicScope, true,
+		// new Object[] { "SSS", "STS", "SRS", Character.valueOf('S'),
+		// "ingotIron", Character.valueOf('T'), "ingotTin",
+		// Character.valueOf('R'), "ingotRedstone" }));
+		GameRegistry.addRecipe(basicScopeStack, "III", "ICI", "IRI", 'I',
+				ironStack, 'C', diodeStack, 'R', redstoneStack);
+		GameRegistry.addShapelessRecipe(new ItemStack(portableScopeBlock),
+				basicScopeStack);
+
 	}
 
 	private void blockRegistration() {
@@ -95,6 +108,14 @@ public class Scopes {
 		MinecraftForge.setBlockHarvestLevel(basicGenerator, "pickaxe", 0);
 		GameRegistry.registerBlock(basicGenerator, "basicGenerator");
 
+		LanguageRegistry.addName(portableScopeBlock, "Portable Scope");
+		MinecraftForge.setBlockHarvestLevel(portableScopeBlock, "pickaxe", 0);
+		GameRegistry.registerBlock(portableScopeBlock, "portableScopeBlock");
+
+	}
+
+	private void itemRegistration() {
+		LanguageRegistry.addName(portableScopeItem, "Portable Scope");
 	}
 
 	private void tileEntityRegistration() {
